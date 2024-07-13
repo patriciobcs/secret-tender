@@ -29,11 +29,9 @@ const chainIds = {
 function getChainConfig(chain: keyof typeof chainIds): NetworkUserConfig {
   let jsonRpcUrl: string;
   switch (chain) {
-    
     case "local":
       jsonRpcUrl = "http://localhost:8545";
       break;
-    
     case "inco":
       jsonRpcUrl = networks.inco.rpcUrl;
       break;
@@ -55,6 +53,12 @@ function getChainConfig(chain: keyof typeof chainIds): NetworkUserConfig {
     },
     chainId: chainIds[chain],
     url: jsonRpcUrl,
+    verify: {
+      etherscan: {
+        apiUrl: "https://api-sepolia.basescan.org",
+        apiKey: process.env.ETHERSCAN_API_KEY
+      }
+    }
   };
 }
 
@@ -115,8 +119,23 @@ const config: HardhatUserConfig = {
     target: "ethers-v6",
   },
   crossdeploy: {
-    contracts:  ["HiddenCard", "Card"],
+    contracts:  ["SecretTender", "BridgeTender"],
     signer: process.env.PRIVATE_KEY || "",
+  },
+  etherscan: {
+    apiKey: {
+      baseSepolia: process.env.ETHERSCAN_API_KEY,
+    },
+    customChains: [
+      {
+        network: "baseSepolia",
+        chainId: 84532,
+        urls: {
+          apiURL: "https://api-sepolia.basescan.org/api",
+          browserURL: "https://sepolia.basescan.org"
+        }
+      }
+    ]
   }
 };
 

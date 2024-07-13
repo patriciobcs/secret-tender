@@ -58,14 +58,11 @@ contract SecretTender is BridgeContract, EIP712WithModifier {
 
         uint256 id = uint256(keccak256(abi.encodePacked(msg.sender, block.timestamp)));
 
-        tenders[id] = Tender({
-            id: id,
-            length: length,
-            amount: amount,
-            deadline: block.timestamp + 7 days,
-            owner: msg.sender,
-            proposals: new Proposal[](0)
-        });
+        tenders[id].id = id;
+        tenders[id].length = length;
+        tenders[id].amount = amount;
+        tenders[id].deadline = block.timestamp + 7 days;
+        tenders[id].owner = msg.sender;
     }
 
     function createProposal(uint256 tenderId, euint32 amount, euint32 length, euint32 secret) external {
@@ -77,15 +74,10 @@ contract SecretTender is BridgeContract, EIP712WithModifier {
             revert AmountOrLengthMismatch();
 
         uint256 id = uint256(keccak256(abi.encodePacked(msg.sender, tenderId)));
-        Proposal memory proposal = Proposal({
-            id: id,
-            tenderId: tenderId,
-            length: length,
-            amount: amount,
-            owner: msg.sender,
-            secret: secret
-        });
-        tender.proposals.push(proposal);
+
+        tender.proposals.push(
+            Proposal({ id: id, tenderId: tenderId, length: length, amount: amount, owner: msg.sender, secret: secret })
+        );
     }
 
     function revealTenderProposals(uint256 tenderId) external view returns (uint256[] memory) {
@@ -95,7 +87,7 @@ contract SecretTender is BridgeContract, EIP712WithModifier {
         uint256[] memory secrets = new uint256[](tender.proposals.length);
 
         for (uint256 i = 0; i < tender.proposals.length; i++) {
-            Proposal storage proposal = tender.proposals[i];
+            Proposal memory proposal = tender.proposals[i];
 
             secrets[i] = TFHE.decrypt(proposal.secret);
         }
