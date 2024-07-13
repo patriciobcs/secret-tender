@@ -18,4 +18,8 @@ Key Features
 - Secure and Confidential: All tenders and proposals are encrypted to ensure confidentiality and fairness. They are only visible to the project owners after the tender is closed. In this way other auditing firms cannot copy the proposals of their competitors.
 - Transparency: Projects can view past performance data of auditing firms.
 - Fair Competition: Auditing firms can submit proposals directly to projects without intermediaries.
-- - : Ensures the integrity and immutability of the tender process.
+- On-chain: Ensures the integrity and immutability of the tender process.
+
+## Credits
+
+- [Inco Bridge Template](https://github.com/Inco-fhevm/hardhat-inco-bridge-template/tree/master): The backend/contracts of this project are based on the Inco Bridge Template. We have modified the contracts to suit the requirements of this platform.
