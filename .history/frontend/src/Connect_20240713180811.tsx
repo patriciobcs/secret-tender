@@ -1,14 +1,14 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { BrowserProvider } from "ethers";
-import { createFhevmInstance } from "../../fhevmjs";
-import "./Connect.css";
-import { Eip1193Provider } from "ethers";
+import { createFhevmInstance } from "./utils/fhevm";
+import React, { useState, useCallback, useEffect, useMemo } from "react";
 
 const AUTHORIZED_CHAIN_ID = ["0x2382", "0x2383"]; // 9090, 9091
 
-export const Connect: React.FC<{
+interface ConnectProps {
   children: (account: string, provider: BrowserProvider) => React.ReactNode;
-}> = ({ children }) => {
+}
+
+export const Connect: React.FC<ConnectProps> = ({ children }) => {
   const [connected, setConnected] = useState<boolean>(false);
   const [validNetwork, setValidNetwork] = useState<boolean>(false);
   const [account, setAccount] = useState<string>("");
@@ -21,7 +21,7 @@ export const Connect: React.FC<{
   };
 
   const hasValidNetwork = async (): Promise<boolean> => {
-    const currentChainId: string = await window.ethereum.request({
+    const currentChainId = await window.ethereum.request({
       method: "eth_chainId",
     });
     return AUTHORIZED_CHAIN_ID.includes(currentChainId.toLowerCase());
@@ -36,7 +36,7 @@ export const Connect: React.FC<{
     }
   }, []);
 
-  const refreshProvider = (eth: Eip1193Provider) => {
+  const refreshProvider = (eth: any) => {
     const p = new BrowserProvider(eth);
     setProvider(p);
     return p;
@@ -59,6 +59,7 @@ export const Connect: React.FC<{
       .catch(() => {
         // Do nothing
       });
+
     eth.on("accountsChanged", refreshAccounts);
     eth.on("chainChanged", refreshNetwork);
   }, [refreshNetwork]);
@@ -67,7 +68,7 @@ export const Connect: React.FC<{
     if (!provider) {
       return;
     }
-    const accounts: string[] = await provider.send("eth_requestAccounts", []);
+    const accounts = await provider.send("eth_requestAccounts", []);
 
     if (accounts.length > 0) {
       setAccount(accounts[0]);
@@ -105,7 +106,7 @@ export const Connect: React.FC<{
     await refreshNetwork();
   }, [refreshNetwork]);
 
-  const child = useMemo<React.ReactNode>(() => {
+  const child = useMemo(() => {
     if (!account || !provider) {
       return null;
     }
