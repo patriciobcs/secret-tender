@@ -23,3 +23,4 @@ Key Features
 ## Credits
 
 - [Inco Bridge Template](https://github.com/Inco-fhevm/hardhat-inco-bridge-template/tree/master): The backend/contracts of this project are based on the Inco Bridge Template. We have modified the contracts to suit the requirements of this platform.
+- [fhevmjs React Template](https://github.com/Inco-fhevm/fhevmjs-react-example): The frontend of this project is based on the fhevmjs React Template. We have modified the frontend to suit the requirements of this platform.
