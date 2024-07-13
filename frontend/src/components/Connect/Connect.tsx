@@ -1,25 +1,28 @@
-import { BrowserProvider } from "ethers";
-import { createFhevmInstance } from "./utils/fhevm";
-import { useState, useCallback, useEffect, useMemo, React } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { BrowserProvider } from 'ethers';
 
-const AUTHORIZED_CHAIN_ID = ["0x2382", "0x2383"]; // 9090, 9091
+import './Connect.css';
+import { Eip1193Provider } from 'ethers';
+import { createFhevmInstance } from '../../fhevmjs';
 
-export const Connect = ({ children }) => {
+const AUTHORIZED_CHAIN_ID = ['0x1f49', '0x1f4a', '0x1f4b', '0x2328'];
+
+export const Connect: React.FC<{
+  children: (account: string, provider: any) => React.ReactNode;
+}> = ({ children }) => {
   const [connected, setConnected] = useState(false);
   const [validNetwork, setValidNetwork] = useState(false);
-  const [account, setAccount] = useState("");
-  const [error, setError] = useState(null);
-  const [provider, setProvider] = useState(null);
+  const [account, setAccount] = useState<string>('');
+  const [error, setError] = useState<string | null>(null);
+  const [provider, setProvider] = useState<BrowserProvider | null>(null);
 
-  const refreshAccounts = (accounts) => {
-    setAccount(accounts[0] || "");
+  const refreshAccounts = (accounts: string[]) => {
+    setAccount(accounts[0] || '');
     setConnected(accounts.length > 0);
   };
 
-  const hasValidNetwork = async () => {
-    const currentChainId = await window.ethereum.request({
-      method: "eth_chainId",
-    });
+  const hasValidNetwork = async (): Promise<boolean> => {
+    const currentChainId: string = await window.ethereum.request({ method: 'eth_chainId' });
     return AUTHORIZED_CHAIN_ID.includes(currentChainId.toLowerCase());
   };
 
@@ -32,7 +35,7 @@ export const Connect = ({ children }) => {
     }
   }, []);
 
-  const refreshProvider = (eth) => {
+  const refreshProvider = (eth: Eip1193Provider) => {
     const p = new BrowserProvider(eth);
     setProvider(p);
     return p;
@@ -41,29 +44,29 @@ export const Connect = ({ children }) => {
   useEffect(() => {
     const eth = window.ethereum;
     if (!eth) {
-      setError("No wallet has been found");
+      setError('No wallet has been found');
       return;
     }
 
     const p = refreshProvider(eth);
 
-    p.send("eth_accounts", [])
-      .then(async (accounts) => {
+    p.send('eth_accounts', [])
+      .then(async (accounts: string[]) => {
         refreshAccounts(accounts);
         await refreshNetwork();
       })
       .catch(() => {
         // Do nothing
       });
-    eth.on("accountsChanged", refreshAccounts);
-    eth.on("chainChanged", refreshNetwork);
+    eth.on('accountsChanged', refreshAccounts);
+    eth.on('chainChanged', refreshNetwork);
   }, [refreshNetwork]);
 
   const connect = async () => {
     if (!provider) {
       return;
     }
-    const accounts = await provider.send("eth_requestAccounts", []);
+    const accounts: string[] = await provider.send('eth_requestAccounts', []);
 
     if (accounts.length > 0) {
       setAccount(accounts[0]);
@@ -77,23 +80,23 @@ export const Connect = ({ children }) => {
   const switchNetwork = useCallback(async () => {
     try {
       await window.ethereum.request({
-        method: "wallet_switchEthereumChain",
+        method: 'wallet_switchEthereumChain',
         params: [{ chainId: AUTHORIZED_CHAIN_ID[0] }],
       });
     } catch (e) {
       await window.ethereum.request({
-        method: "wallet_addEthereumChain",
+        method: 'wallet_addEthereumChain',
         params: [
           {
             chainId: AUTHORIZED_CHAIN_ID[0],
-            rpcUrls: ["https://testnet.inco.org"],
-            chainName: "Inco Gentry Testnet",
+            rpcUrls: ['https://devnet.zama.ai/'],
+            chainName: 'Zama Devnet',
             nativeCurrency: {
-              name: "INCO",
-              symbol: "INCO",
+              name: 'ZAMA',
+              symbol: 'ZAMA',
               decimals: 18,
             },
-            blockExplorerUrls: ["https://explorer.inco.org/"],
+            blockExplorerUrls: ['https://main.explorer.zama.ai'],
           },
         ],
       });
@@ -101,7 +104,7 @@ export const Connect = ({ children }) => {
     await refreshNetwork();
   }, [refreshNetwork]);
 
-  const child = useMemo(() => {
+  const child = useMemo<React.ReactNode>(() => {
     if (!account || !provider) {
       return null;
     }
@@ -112,7 +115,7 @@ export const Connect = ({ children }) => {
           <p>You're not on the correct network</p>
           <p>
             <button className="Connect__button" onClick={switchNetwork}>
-              Switch to Inco Gentry Testnet
+              Switch to Zama Devnet
             </button>
           </p>
         </div>
@@ -133,9 +136,7 @@ export const Connect = ({ children }) => {
           Connect your wallet
         </button>
       )}
-      {connected && (
-        <div className="Connect__account">Connected with {account}</div>
-      )}
+      {connected && <div className="Connect__account">Connected with {account}</div>}
     </div>
   );
 
