@@ -33,12 +33,11 @@ function App() {
         </Connect>
         {isConnected && (
           <>
-            <h2>what is your next step?</h2>
             <Button variant="primary" onClick={() => setShowExample(true)}>
-              Submit Tender
+              Show Example 1
             </Button>
             <Button variant="secondary" onClick={() => setShowExample(true)}>
-              Submit project
+              Show Example 2
             </Button>
             {showExample && <Example />}
           </>

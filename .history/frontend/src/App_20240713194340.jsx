@@ -21,30 +21,35 @@ function App() {
   if (!isInitialized) return null;
 
   return (
-    <div className="App">
-      <div className="menu">
-        <Connect>
-          {(account, provider) => {
-            if (!isConnected) {
-              setIsConnected(true);
-            }
-            return null;
-          }}
-        </Connect>
-        {isConnected && (
-          <>
-            <h2>what is your next step?</h2>
-            <Button variant="primary" onClick={() => setShowExample(true)}>
-              Submit Tender
-            </Button>
-            <Button variant="secondary" onClick={() => setShowExample(true)}>
-              Submit project
-            </Button>
-            {showExample && <Example />}
-          </>
-        )}
+    <Router>
+      <div className="App">
+        <div className="menu">
+          <Connect>
+            {(account, provider) => {
+              if (!isConnected) {
+                setIsConnected(true);
+              }
+              return null;
+            }}
+          </Connect>
+          {isConnected && (
+            <>
+              <Link to="/submit-tender">
+                <Button variant="primary">Submit Tender</Button>
+              </Link>
+              <Link to="/post-tender">
+                <Button variant="secondary">Post Tender</Button>
+              </Link>
+            </>
+          )}
+        </div>
+
+        <Switch>
+          <Route path="/submit-tender" component={SubmitTender} />
+          {/* Add other routes here */}
+        </Switch>
       </div>
-    </div>
+    </Router>
   );
 }
 

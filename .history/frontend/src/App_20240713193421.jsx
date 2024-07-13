@@ -5,10 +5,9 @@ import { init, getInstance } from "./utils/fhevm";
 import { toHexString } from "./utils/utils";
 import { Connect } from "./Connect";
 
+
 function App() {
   const [isInitialized, setIsInitialized] = useState(false);
-  const [isConnected, setIsConnected] = useState(false);
-  const [showExample, setShowExample] = useState(false);
 
   useEffect(() => {
     init()
@@ -23,26 +22,7 @@ function App() {
   return (
     <div className="App">
       <div className="menu">
-        <Connect>
-          {(account, provider) => {
-            if (!isConnected) {
-              setIsConnected(true);
-            }
-            return null;
-          }}
-        </Connect>
-        {isConnected && (
-          <>
-            <h2>what is your next step?</h2>
-            <Button variant="primary" onClick={() => setShowExample(true)}>
-              Submit Tender
-            </Button>
-            <Button variant="secondary" onClick={() => setShowExample(true)}>
-              Submit project
-            </Button>
-            {showExample && <Example />}
-          </>
-        )}
+        <Connect>{(account, provider) => <Example />}</Connect>
       </div>
     </div>
   );

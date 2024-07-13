@@ -1,54 +1,8 @@
-import "./App.css";
-import { useState, useEffect } from "react";
+// SubmitTender.js
+import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
-import { init, getInstance } from "./utils/fhevm";
-import { toHexString } from "./utils/utils";
-import { Connect } from "./Connect";
 
-function App() {
-  const [isInitialized, setIsInitialized] = useState(false);
-  const [isConnected, setIsConnected] = useState(false);
-  const [showExample, setShowExample] = useState(false);
-
-  useEffect(() => {
-    init()
-      .then(() => {
-        setIsInitialized(true);
-      })
-      .catch(() => setIsInitialized(false));
-  }, []);
-
-  if (!isInitialized) return null;
-
-  return (
-    <div className="App">
-      <div className="menu">
-        <Connect>
-          {(account, provider) => {
-            if (!isConnected) {
-              setIsConnected(true);
-            }
-            return null;
-          }}
-        </Connect>
-        {isConnected && (
-          <>
-            <h2>what is your next step?</h2>
-            <Button variant="primary" onClick={() => setShowExample(true)}>
-              Submit Tender
-            </Button>
-            <Button variant="secondary" onClick={() => setShowExample(true)}>
-              Submit project
-            </Button>
-            {showExample && <Example />}
-          </>
-        )}
-      </div>
-    </div>
-  );
-}
-
-function Example() {
+const SubmitTender = () => {
   const [amountUint8, setAmountUint8] = useState(0);
   const [eamountUint8, setEamountUint8] = useState(0);
   const [amountUint16, setAmountUint16] = useState(0);
@@ -57,6 +11,7 @@ function Example() {
   const [eamountUint32, setEamountUint32] = useState(0);
 
   const handleAmountChangeUint8 = (event) => {
+    // Assuming getInstance and toHexString are imported
     let _instance = getInstance();
     _instance.then((instance) => {
       setEamountUint8(toHexString(instance.encrypt8(+event.target.value)));
@@ -100,17 +55,7 @@ function Example() {
 
   return (
     <div>
-      <h1>
-        Welcome to <span>Secret Tender</span>
-      </h1>
-      <span className="footer">
-        Switch to Inco Gentry Testnet on Metamask:{" "}
-        <a
-          href="https://docs.inco.network/getting-started/connect-metamask"
-          target="_blank">
-          Guide
-        </a>
-      </span>
+      <h1>Submit Tender</h1>
       <Form className="Form-container">
         <Form.Group className="form-group">
           <Form.Label className="label">uint8: </Form.Label>
@@ -194,17 +139,8 @@ function Example() {
           )}
         </Form.Group>
       </Form>
-      <br></br>
-      <span className="footer">
-        Documentation:{" "}
-        <a
-          href="https://docs.inco.network/introduction/inco-network-introduction"
-          target="_blank">
-          docs.inco.network
-        </a>
-      </span>
     </div>
   );
-}
+};
 
-export default App;
+export default SubmitTender;

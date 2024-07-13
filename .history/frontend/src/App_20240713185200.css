@@ -1,9 +1,8 @@
 :root {
   --primary-color: #72ff80;
   --secondary-color: #585858;
-  --background-gradient: linear-gradient(135deg, #000000, #0f0f0f);
+  --background-gradient: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
   --button-hover-color: #72ff80;
-  --grid-color: rgba(0, 255, 0, 0.2);
 }
 
 #root {
@@ -13,7 +12,7 @@
   text-align: center;
   background: var(--background-gradient);
   border-radius: 1rem;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 body {
@@ -24,42 +23,6 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #000;
-  background-image: linear-gradient(
-      0deg,
-      transparent 24%,
-      var(--grid-color) 25%,
-      var(--grid-color) 26%,
-      transparent 27%,
-      transparent 74%,
-      var(--grid-color) 75%,
-      var(--grid-color) 76%,
-      transparent 77%,
-      transparent
-    ),
-    linear-gradient(
-      90deg,
-      transparent 24%,
-      var(--grid-color) 25%,
-      var(--grid-color) 26%,
-      transparent 27%,
-      transparent 74%,
-      var(--grid-color) 75%,
-      var(--grid-color) 76%,
-      transparent 77%,
-      transparent
-    );
-  background-size: 50px 50px;
-  animation: background-scroll 100s linear infinite;
-}
-
-@keyframes background-scroll {
-  from {
-    background-position: 0 0, 0 0;
-  }
-  to {
-    background-position: 100% 100%, 100% 100%;
-  }
 }
 
 .App {
@@ -121,28 +84,6 @@ body {
 
 h1 span {
   color: var(--primary-color);
-  animation: text-flicker 1.5s infinite alternate;
-}
-
-@keyframes text-flicker {
-  0%,
-  19%,
-  21%,
-  23%,
-  25%,
-  54%,
-  56%,
-  100% {
-    opacity: 0.99;
-    text-shadow: 0 0 4px var(--primary-color), 0 0 11px var(--primary-color),
-      0 0 19px var(--primary-color), 0 0 40px var(--primary-color);
-  }
-  20%,
-  24%,
-  55% {
-    opacity: 0.4;
-    text-shadow: none;
-  }
 }
 
 .Input {
@@ -154,13 +95,11 @@ h1 span {
   padding: 10px;
   font-size: 1rem;
   border-radius: 0.5rem;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .Input:focus {
   border-color: var(--button-hover-color);
   outline: none;
-  box-shadow: 0 0 10px var(--button-hover-color);
 }
 
 .disabled-link {

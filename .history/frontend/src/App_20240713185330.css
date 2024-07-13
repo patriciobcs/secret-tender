@@ -50,7 +50,7 @@ body {
       transparent
     );
   background-size: 50px 50px;
-  animation: background-scroll 100s linear infinite;
+  animation: background-scroll 10s linear infinite;
 }
 
 @keyframes background-scroll {

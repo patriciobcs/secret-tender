@@ -33,7 +33,9 @@ function App() {
         </Connect>
         {isConnected && (
           <>
-            <h2>what is your next step?</h2>
+            <h1>
+              Welcome to <span>Secret Tender</span>
+            </h1>
             <Button variant="primary" onClick={() => setShowExample(true)}>
               Submit Tender
             </Button>

@@ -7,8 +7,6 @@ import { Connect } from "./Connect";
 
 function App() {
   const [isInitialized, setIsInitialized] = useState(false);
-  const [isConnected, setIsConnected] = useState(false);
-  const [showExample, setShowExample] = useState(false);
 
   useEffect(() => {
     init()
@@ -23,26 +21,7 @@ function App() {
   return (
     <div className="App">
       <div className="menu">
-        <Connect>
-          {(account, provider) => {
-            if (!isConnected) {
-              setIsConnected(true);
-            }
-            return null;
-          }}
-        </Connect>
-        {isConnected && (
-          <>
-            <h2>what is your next step?</h2>
-            <Button variant="primary" onClick={() => setShowExample(true)}>
-              Submit Tender
-            </Button>
-            <Button variant="secondary" onClick={() => setShowExample(true)}>
-              Submit project
-            </Button>
-            {showExample && <Example />}
-          </>
-        )}
+        <Connect>{(account, provider) => <Example />}</Connect>
       </div>
     </div>
   );
@@ -101,13 +80,14 @@ function Example() {
   return (
     <div>
       <h1>
-        Welcome to <span>Secret Tender</span>
+        Welcome to <span>Inco Network</span>
       </h1>
       <span className="footer">
         Switch to Inco Gentry Testnet on Metamask:{" "}
         <a
           href="https://docs.inco.network/getting-started/connect-metamask"
-          target="_blank">
+          target="_blank"
+        >
           Guide
         </a>
       </span>
@@ -199,7 +179,8 @@ function Example() {
         Documentation:{" "}
         <a
           href="https://docs.inco.network/introduction/inco-network-introduction"
-          target="_blank">
+          target="_blank"
+        >
           docs.inco.network
         </a>
       </span>
