@@ -1,6 +1,7 @@
 import { BrowserProvider } from "ethers";
 import { createFhevmInstance } from "./utils/fhevm";
 import { useState, useCallback, useEffect, useMemo, React } from "react";
+import "./Connect.css"; // Assuming you have a CSS file for styles
 
 const AUTHORIZED_CHAIN_ID = ["0x2382", "0x2383"]; // 9090, 9091
 
@@ -109,7 +110,7 @@ export const Connect = ({ children }) => {
     if (!validNetwork) {
       return (
         <div>
-          <p className="text-red-500">You&apos;re not on the correct network</p>
+          <p className="text-red-500">You're not on the correct network</p>
           <p>
             <button
               className="Connect__button bg-gray-200 hover:bg-blue-400"

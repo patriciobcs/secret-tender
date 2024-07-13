@@ -132,7 +132,7 @@ export const Connect = ({ children }) => {
     <div className="Connect__info">
       {!connected && (
         <button
-          className="Connect__button bg-red-200 hover:bg-blue-400"
+          className="Connect__button bg-gray-200 hover:bg-blue-400"
           onClick={connect}>
           Connect your wallet
         </button>

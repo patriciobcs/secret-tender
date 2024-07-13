@@ -109,12 +109,10 @@ export const Connect = ({ children }) => {
     if (!validNetwork) {
       return (
         <div>
-          <p className="text-red-500">You&apos;re not on the correct network</p>
+          <p>You're not on the correct network</p>
           <p>
-            <button
-              className="Connect__button bg-gray-200 hover:bg-blue-400"
-              onClick={switchNetwork}>
-              Switch to Inco Network Testnet
+            <button className="Connect__button" onClick={switchNetwork}>
+              Switch to Inco Gentry Testnet
             </button>
           </p>
         </div>
@@ -131,9 +129,7 @@ export const Connect = ({ children }) => {
   const connectInfos = (
     <div className="Connect__info">
       {!connected && (
-        <button
-          className="Connect__button bg-red-200 hover:bg-blue-400"
-          onClick={connect}>
+        <button className="Connect__button" onClick={connect}>
           Connect your wallet
         </button>
       )}
