@@ -3,7 +3,14 @@ import { useState, useEffect } from "react";
 import { Button } from "react-bootstrap";
 import { init } from "./utils/fhevm";
 import { Connect } from "./Connect";
-import Example from "./Example";
+import SecretInput from "./SecretInput"; // Changed import from Example to SecretInput
+
+<link
+  rel="stylesheet"
+  href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+  integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+  crossorigin="anonymous"
+/>;
 
 function App() {
   const [isInitialized, setIsInitialized] = useState(false);
@@ -40,7 +47,8 @@ function App() {
             <Button variant="secondary" onClick={() => setShowExample(true)}>
               Submit project
             </Button>
-            {showExample && <Example />}
+            {showExample && <SecretInput />}{" "}
+            {/* Changed Example to SecretInput */}
           </>
         )}
       </div>

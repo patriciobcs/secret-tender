@@ -4,6 +4,7 @@
   --background-gradient: linear-gradient(135deg, #000000, #0f0f0f);
   --button-hover-color: #72ff80;
   --grid-color: rgba(0, 255, 0, 0.2);
+  --placeholder-color: #aaaaaa;
 }
 
 #root {
@@ -155,6 +156,10 @@ h1 span {
   font-size: 1rem;
   border-radius: 0.5rem;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.Input::placeholder {
+  color: var(--placeholder-color);
 }
 
 .Input:focus {

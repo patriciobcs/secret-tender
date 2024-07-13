@@ -10,12 +10,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "bootstrap": "4.6",
+    "@lighthouse-web3/sdk": "^0.3.3",
+    "bootstrap": "~4.6.2",
+    "dotenv": "^16.4.5",
     "ether": "^0.0.9",
     "ethers": "^6.6.4",
     "fhevmjs": "^0.4.0-3",
     "react": "^18.2.0",
-    "react-bootstrap": "^2.8.0",
+    "react-bootstrap": "^2.10.4",
     "react-dom": "^18.2.0",
     "viem": "^1.4.0",
     "web3": "^4.0.3",
