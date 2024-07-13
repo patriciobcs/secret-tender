@@ -180,9 +180,9 @@ function SecretInput() {
           />
         </div>
 
-        <Button variant="primary" type="submit">
+        {/* <Button variant="primary" type="submit">
           Export as JSON
-        </Button>
+        </Button> */}
         <Button variant="secondary" onClick={handleUpload} className="mt-3">
           Upload JSON
         </Button>
@@ -193,7 +193,9 @@ function SecretInput() {
           <p>
             CID:{" "}
             <a
-              href={`https://ipfs.io/ipfs/${cid}`}
+              // href={`https://ipfs.io/ipfs/${cid}`}
+
+              href={`https://files.lighthouse.storage/viewFile/${cid}`}
               target="_blank"
               rel="noopener noreferrer">
               {cid}
