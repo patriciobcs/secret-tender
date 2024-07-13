@@ -17,16 +17,16 @@ interface IInterchainExecuteRouter {
 abstract contract BridgeContract {
     uint32 DestinationDomain;
     // HiddenCard contract in Inco Network
-    address hiddencard;
+    address secretTender;
     // InterchainExcuteRouter contract address in current chain
     address iexRouter;
     address caller_contract;
     bool public isInitialized;
 
-    function initialize(uint32 _DestinationDomain, address _hiddencard, address _iexRouter) public {
+    function initialize(uint32 _DestinationDomain, address _secretTender, address _iexRouter) public {
         require(isInitialized == false, "Bridge contract already initialized");
         DestinationDomain = _DestinationDomain;
-        hiddencard = _hiddencard;
+        secretTender = _secretTender;
         iexRouter = _iexRouter;
         caller_contract = msg.sender;
         isInitialized = true;
