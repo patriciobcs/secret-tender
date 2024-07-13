@@ -74,9 +74,9 @@ function SecretInput() {
 
     // Upload JSON file to Filecoin using Lighthouse
     try {
-      const apiKey = "api"; // Replace with your actual API key
+      const apiKey = import.meta.env.VITE_LIGHTHOUSE_API_KEY; // Replace with your actual API key
       console.log(apiKey); // For debugging
-      const response = await lighthouse.upload(formDataUpload, apiKey);
+      const response = await lighthouse.uploadText(json, apiKey);
       console.log(response);
       setCid(response.data.Hash); // Set the CID state
       alert(`File uploaded successfully! CID: ${response.data.Hash}`);
