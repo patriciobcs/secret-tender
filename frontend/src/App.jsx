@@ -6,6 +6,7 @@ import SecretInput from "./SecretInput";
 import Dashboard from "./Dashboard";
 import Header from "./Header";
 import SecretTender from "./SecretTender";
+import SecretProposal from "./SecretProposal";
 import "./App.css";
 
 function App() {
@@ -67,6 +68,7 @@ function App() {
             </div>
           )}
           {isConnected && <SecretTender />}
+          {isConnected && <SecretProposal />}
         </div>
         <Routes>
           <Route path="/submit-tender" element={<SecretInput />} />
