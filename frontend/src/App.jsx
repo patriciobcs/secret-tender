@@ -1,21 +1,16 @@
-import "./App.css";
-import { useState, useEffect } from "react";
-import { Button } from "react-bootstrap";
+import React, { useState, useEffect } from "react";
+import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import { init } from "./utils/fhevm";
 import { Connect } from "./Connect";
-import SecretInput from "./SecretInput"; // Changed import from Example to SecretInput
-
-<link
-  rel="stylesheet"
-  href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-  integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-  crossorigin="anonymous"
-/>;
+import SecretInput from "./SecretInput";
+import Dashboard from "./Dashboard";
+import Header from "./Header";
+import "./App.css";
 
 function App() {
   const [isInitialized, setIsInitialized] = useState(false);
   const [isConnected, setIsConnected] = useState(false);
-  const [showExample, setShowExample] = useState(false);
+  const [account, setAccount] = useState(null);
 
   useEffect(() => {
     init()
@@ -25,34 +20,59 @@ function App() {
       .catch(() => setIsInitialized(false));
   }, []);
 
-  if (!isInitialized) return null;
-
   return (
-    <div className="App">
-      <div className="menu">
+    <Router>
+      <div className="App">
         <Connect>
-          {(account, provider) => {
+          {(connectedAccount, provider) => {
             if (!isConnected) {
               setIsConnected(true);
+              setAccount(connectedAccount);
             }
             return null;
           }}
         </Connect>
-        {isConnected && (
-          <>
-            <h2>what is your next step?</h2>
-            <Button variant="primary" onClick={() => setShowExample(true)}>
-              Submit Tender
-            </Button>
-            <Button variant="secondary" onClick={() => setShowExample(true)}>
-              Submit project
-            </Button>
-            {showExample && <SecretInput />}{" "}
-            {/* Changed Example to SecretInput */}
-          </>
-        )}
+        <Header account={account} />
+        <div className="content">
+          <h1>
+            Welcome to <span>Secret Tender</span>
+          </h1>
+          <p>
+            Switch to Inco Gentry Testnet on Metamask:{" "}
+            <a href="https://guide.url" className="guide-link">
+              Guide
+            </a>
+          </p>
+          {isConnected && (
+            <div className="menu">
+              <h2>What is your next step?</h2>
+              <div className="button-group">
+                <Link to="/submit-tender">
+                  <button type="button" className="btn btn-secondary">
+                    Submit Tender
+                  </button>
+                </Link>
+                <Link to="/submit-project">
+                  <button type="button" className="btn btn-secondary">
+                    Submit Project
+                  </button>
+                </Link>
+                <Link to="/dashboard">
+                  <button type="button" className="btn btn-secondary">
+                    Dashboard
+                  </button>
+                </Link>
+              </div>
+            </div>
+          )}
+        </div>
+        <Routes>
+          <Route path="/submit-tender" element={<SecretInput />} />
+          <Route path="/submit-project" element={<SecretInput />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+        </Routes>
       </div>
-    </div>
+    </Router>
   );
 }
 
