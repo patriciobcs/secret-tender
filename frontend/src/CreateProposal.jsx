@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import lighthouse from "@lighthouse-web3/sdk";
-import "./SecretInput.css"; // Importing the new CSS file
+import "./SecretInput.css";
 
-function SecretInput() {
+function CreateProposal() {
   const [name, setName] = useState("");
   const [goal, setGoal] = useState("");
   const [description, setDescription] = useState("");
@@ -180,9 +180,6 @@ function SecretInput() {
           />
         </div>
 
-        {/* <Button variant="primary" type="submit">
-          Export as JSON
-        </Button> */}
         <Button variant="secondary" onClick={handleUpload} className="mt-3">
           Upload
         </Button>
@@ -193,8 +190,6 @@ function SecretInput() {
           <p>
             CID:{" "}
             <a
-              // href={`https://ipfs.io/ipfs/${cid}`}
-
               href={`https://files.lighthouse.storage/viewFile/${cid}`}
               target="_blank"
               rel="noopener noreferrer">
@@ -217,4 +212,4 @@ function SecretInput() {
   );
 }
 
-export default SecretInput;
+export default CreateProposal;

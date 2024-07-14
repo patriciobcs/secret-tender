@@ -50,12 +50,12 @@ function App() {
               <div className="button-group">
                 <Link to="/submit-tender">
                   <button type="button" className="btn btn-secondary">
-                    Submit Tender
+                    Create Proposal
                   </button>
                 </Link>
                 <Link to="/submit-project">
                   <button type="button" className="btn btn-secondary">
-                    Submit Project
+                    Create Tender
                   </button>
                 </Link>
                 <Link to="/dashboard">
