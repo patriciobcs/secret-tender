@@ -4,9 +4,9 @@ pragma solidity >=0.8.13 <0.9.0;
 
 import "fhevm/abstracts/EIP712WithModifier.sol";
 import "fhevm/lib/TFHE.sol";
-import "./Common.sol";
+import "./EncryptedERC20.sol";
 
-contract SecretTender is BridgeContract, EIP712WithModifier {
+contract SecretTender is EIP712WithModifier {
     struct Tender {
         uint256 id; // Unique identifier UUID
         euint32 length; // Max length (days) expected for the proposals
@@ -25,7 +25,6 @@ contract SecretTender is BridgeContract, EIP712WithModifier {
         euint32 secret; // Secret value to be used to revel the proposal after the deadline
     }
 
-    error InsufficientBalance();
     error TenderNotFound();
     error TenderExpired();
     error TenderNotExpired();
@@ -34,28 +33,23 @@ contract SecretTender is BridgeContract, EIP712WithModifier {
     mapping(address owner => euint32 amount) public balances;
     mapping(uint256 tenderId => Tender tender) public tenders;
 
-    constructor() EIP712WithModifier("Authorization token", "1") {}
+    EncryptedERC20 public usdc;
 
-    function deposit(address user, uint256 amount) external onlyCallerContract returns (uint256) {
-        balances[user] = TFHE.asEuint32(amount);
-        return amount;
+    constructor() EIP712WithModifier("Authorization token", "1") {
+        usdc = new EncryptedERC20();
     }
 
-    function balance() external view returns (uint32) {
-        return TFHE.decrypt(balances[msg.sender]);
+    function faucet() public {
+        uint256 amount = 100000;
+        euint32 encryptedAmount = TFHE.asEuint32(amount);
+        usdc.transfer(msg.sender, encryptedAmount);
     }
 
-    function withdraw(euint32 amount) external {
-        if (!TFHE.decrypt(TFHE.ge(balances[msg.sender], amount))) revert InsufficientBalance();
-        balances[msg.sender] = TFHE.sub(balances[msg.sender], amount);
+    function createTender(bytes calldata encryptedLength, bytes calldata encryptedAmount) public {
+        euint32 amount = TFHE.asEuint32(encryptedAmount);
+        usdc.transfer(address(this), amount);
 
-        // TODO: Bridge back
-    }
-
-    function createTender(euint32 amount, euint32 length) external {
-        if (!TFHE.decrypt(TFHE.ge(balances[msg.sender], amount))) revert InsufficientBalance();
-        balances[msg.sender] = TFHE.sub(balances[msg.sender], amount);
-
+        euint32 length = TFHE.asEuint32(encryptedLength);
         uint256 id = uint256(keccak256(abi.encodePacked(msg.sender, block.timestamp)));
 
         tenders[id].id = id;

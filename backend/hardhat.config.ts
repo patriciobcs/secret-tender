@@ -7,6 +7,12 @@ import { resolve } from "path";
 
 import "./plugins/crossdeploy";
 
+import "./tasks/accounts";
+import "./tasks/deploySecretTender";
+import "./tasks/getEthereumAddress";
+import "./tasks/createTender";
+import "./tasks/faucet";
+
 import { networks } from "./plugins/crossdeploy/networks"
 
 const dotenvConfigPath: string = process.env.DOTENV_CONFIG_PATH || "./.env";
@@ -124,7 +130,7 @@ const config: HardhatUserConfig = {
   },
   etherscan: {
     apiKey: {
-      baseSepolia: process.env.ETHERSCAN_API_KEY,
+      baseSepolia: process.env.ETHERSCAN_API_KEY || "",
     },
     customChains: [
       {
