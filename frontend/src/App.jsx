@@ -5,6 +5,7 @@ import { Connect } from "./Connect";
 import SecretInput from "./SecretInput";
 import Dashboard from "./Dashboard";
 import Header from "./Header";
+import SecretTender from "./SecretTender";
 import "./App.css";
 
 function App() {
@@ -65,6 +66,7 @@ function App() {
               </div>
             </div>
           )}
+          {isConnected && <SecretTender />}
         </div>
         <Routes>
           <Route path="/submit-tender" element={<SecretInput />} />
