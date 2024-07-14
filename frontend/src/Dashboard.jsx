@@ -1,32 +1,26 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Button } from "react-bootstrap";
-import "./CreateProposal.css"; // Ensure you have this CSS file
+import "./SecretInput.css";
 
 function Dashboard() {
-  const [submissions, setSubmissions] = useState([]);
-
-  useEffect(() => {
-    const savedSubmissions =
-      JSON.parse(localStorage.getItem("submissions")) || [];
-    setSubmissions(savedSubmissions.reverse()); // Reverse the order to show the most recent first
-  }, []);
-
   return (
-    <div className="dashboard-container">
-      <div className="proposal-list">
-        {submissions.map((submission, index) => (
-          <div className="proposal-item" key={index}>
-            <h2>Goal: {submission.goal}</h2>
-            <p>Description: {submission.description}</p>
-            <a
-              href={`https://files.lighthouse.storage/viewFile/${submission.cid}`}
-              className="view-submission"
-              target="_blank"
-              rel="noopener noreferrer">
-              View Submission
-            </a>
-          </div>
-        ))}
+    <div className="secret-tender-container">
+      <header className="header">
+        <h1 className="title">Secret Tender</h1>
+        <p className="subtitle">Unlocking onchain Sealed Proposals</p>
+      </header>
+
+      <div className="section create-proposal-container">
+        <Button className="create-proposal-button">
+          ++ Create a Proposal ++
+        </Button>
+      </div>
+
+      <div className="section proposal-list">
+        <div className="proposal-item">Prop 1</div>
+        <div className="proposal-item">Prop 2</div>
+        <div className="proposal-item">Prop 3</div>
+        <div className="proposal-item">Prop 4</div>
       </div>
     </div>
   );

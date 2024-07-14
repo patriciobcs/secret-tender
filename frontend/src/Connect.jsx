@@ -142,4 +142,11 @@ export const Connect = ({ children }) => {
       )}
     </div>
   );
+
+  return (
+    <>
+      {connectInfos}
+      <div className="Connect__child">{child}</div>
+    </>
+  );
 };

@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import lighthouse from "@lighthouse-web3/sdk";
-import "./CreateProposal.css"; // Ensure you have this CSS file
+import "./SecretInput.css"; // Importing the new CSS file
 
-function CreateProposal() {
+function SecretInput() {
   const [name, setName] = useState("");
   const [goal, setGoal] = useState("");
   const [description, setDescription] = useState("");
@@ -80,14 +80,6 @@ function CreateProposal() {
       console.log(response);
       setCid(response.data.Hash); // Set the CID state
       alert(`File uploaded successfully! CID: ${response.data.Hash}`);
-
-      // Save submission to localStorage
-      const submissions = JSON.parse(localStorage.getItem("submissions")) || [];
-      submissions.push({
-        ...formData,
-        cid: response.data.Hash,
-      });
-      localStorage.setItem("submissions", JSON.stringify(submissions));
     } catch (error) {
       console.error("Error uploading file:", error);
       alert("Error uploading file. Please try again.");
@@ -95,9 +87,9 @@ function CreateProposal() {
   };
 
   return (
-    <div className="secret-tender-container consistent-width">
+    <div className="secret-tender-container">
       <h1>
-        Create<span className="highlight"> Proposal</span>
+        Welcome to <span className="highlight">Secret Tender</span>
       </h1>
       <span className="footer">
         Switch to Inco Gentry Testnet on Metamask:{" "}
@@ -188,16 +180,21 @@ function CreateProposal() {
           />
         </div>
 
+        {/* <Button variant="primary" type="submit">
+          Export as JSON
+        </Button> */}
         <Button variant="secondary" onClick={handleUpload} className="mt-3">
-          Submit
+          Upload JSON
         </Button>
       </Form>
       {cid && (
-        <div className="glass-effect">
+        <div className="cid-container">
           <h3>File uploaded successfully!</h3>
           <p>
             CID:{" "}
             <a
+              // href={`https://ipfs.io/ipfs/${cid}`}
+
               href={`https://files.lighthouse.storage/viewFile/${cid}`}
               target="_blank"
               rel="noopener noreferrer">
@@ -220,4 +217,4 @@ function CreateProposal() {
   );
 }
 
-export default CreateProposal;
+export default SecretInput;
