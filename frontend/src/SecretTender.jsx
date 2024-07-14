@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { getInstance, provider } from "./utils/fhevm";
+import { toHexString } from "./utils/utils";
 import { Contract } from "ethers";
 import secretTenderABI from "./abi/secretTenderABI";
 
@@ -9,9 +10,9 @@ const CONTRACT_ADDRESS = "0x1d9b257E124B836B230FD0b015DF50586385F215";
 function SecretTender() {
   const [loading, setLoading] = useState("");
   const [dialog, setDialog] = useState("");
-  const [amount, setAmount] = useState(0);
+  const [amount, setAmount] = useState(1000);
   const [encryptedAmount, setEncryptedAmount] = useState("");
-  const [length, setLength] = useState(0);
+  const [length, setLength] = useState(5);
   const [encryptedLength, setEncryptedLength] = useState("");
 
   useEffect(() => {
@@ -23,6 +24,7 @@ function SecretTender() {
 
   const handleAmountChange = (e) => {
     setAmount(Number(e.target.value));
+    console.log(instance, e.target.value)
     if (instance) {
       const encrypted = instance.encrypt32(Number(e.target.value));
       setEncryptedAmount(toHexString(encrypted));
@@ -31,6 +33,7 @@ function SecretTender() {
 
   const handleLengthChange = (e) => {
     setLength(Number(e.target.value));
+    console.log(instance, e.target.value)
     if (instance) {
       const encrypted = instance.encrypt32(Number(e.target.value));
       setEncryptedLength(toHexString(encrypted));
@@ -62,8 +65,8 @@ function SecretTender() {
       const contract = new Contract(CONTRACT_ADDRESS, secretTenderABI, signer);
       setLoading("Creating tender...");
       const transaction = await contract.createTender(
-        encryptedAmount,
-        encryptedLength
+        "0x" + encryptedAmount,
+        "0x" + encryptedLength
       );
       setLoading("Waiting for transaction validation...");
       await provider.waitForTransaction(transaction.hash);
