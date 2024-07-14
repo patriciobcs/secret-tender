@@ -131,6 +131,7 @@ const config: HardhatUserConfig = {
   etherscan: {
     apiKey: {
       baseSepolia: process.env.ETHERSCAN_API_KEY || "",
+      inco: "abc",
     },
     customChains: [
       {
@@ -139,6 +140,14 @@ const config: HardhatUserConfig = {
         urls: {
           apiURL: "https://api-sepolia.basescan.org/api",
           browserURL: "https://sepolia.basescan.org"
+        }
+      },
+      {
+        network: "inco",
+        chainId: 9090,
+        urls: {
+          apiURL: "https://explorer.testnet.inco.org/api",
+          browserURL: "https://explorer.testnet.inco.org"
         }
       }
     ]
