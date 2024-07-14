@@ -34,6 +34,8 @@ contract SecretTender is EIP712WithModifier {
     mapping(uint256 tenderId => Tender tender) public tenders;
 
     EncryptedERC20 public usdc;
+    uint256 public tenderCounter = 1;
+    uint256 public proposalCounter = 1;
 
     constructor() EIP712WithModifier("Authorization token", "1") {
         usdc = new EncryptedERC20();
@@ -45,33 +47,52 @@ contract SecretTender is EIP712WithModifier {
         usdc.transfer(msg.sender, encryptedAmount);
     }
 
-    function createTender(bytes calldata encryptedLength, bytes calldata encryptedAmount) public {
-        euint32 amount = TFHE.asEuint32(encryptedAmount);
-        usdc.transfer(address(this), amount);
+    event NewTender(uint256 id, euint32 length, euint32 amount, uint256 deadline, address owner);
 
+    function createTender(bytes calldata encryptedLength, bytes calldata encryptedAmount) public returns (uint256) {
+        euint32 amount = TFHE.asEuint32(encryptedAmount);
         euint32 length = TFHE.asEuint32(encryptedLength);
-        uint256 id = uint256(keccak256(abi.encodePacked(msg.sender, block.timestamp)));
+        uint256 id = tenderCounter;
+        tenderCounter++;
 
         tenders[id].id = id;
         tenders[id].length = length;
         tenders[id].amount = amount;
         tenders[id].deadline = block.timestamp + 7 days;
         tenders[id].owner = msg.sender;
+
+        usdc.transfer(address(this), amount);
+
+        emit NewTender(id, length, amount, tenders[id].deadline, msg.sender);
+
+        return id;
     }
 
-    function createProposal(uint256 tenderId, euint32 amount, euint32 length, euint32 secret) external {
+    function createProposal(
+        uint256 tenderId,
+        bytes calldata encryptedamount,
+        bytes calldata encryptedLength,
+        bytes calldata encryptedSecret
+    ) external returns (uint256) {
         Tender storage tender = tenders[tenderId];
         if (tender.owner == address(0)) revert TenderNotFound();
         if (block.timestamp > tender.deadline) revert TenderExpired();
 
+        euint32 amount = TFHE.asEuint32(encryptedamount);
+        euint32 length = TFHE.asEuint32(encryptedLength);
+        euint32 secret = TFHE.asEuint32(encryptedSecret);
+
         if (!TFHE.decrypt(TFHE.and(TFHE.ge(tender.amount, amount), TFHE.le(tender.length, length))))
             revert AmountOrLengthMismatch();
 
-        uint256 id = uint256(keccak256(abi.encodePacked(msg.sender, tenderId)));
+        uint256 id = proposalCounter;
+        proposalCounter++;
 
         tender.proposals.push(
             Proposal({ id: id, tenderId: tenderId, length: length, amount: amount, owner: msg.sender, secret: secret })
         );
+
+        return id;
     }
 
     function revealTenderProposals(uint256 tenderId) external view returns (uint256[] memory) {

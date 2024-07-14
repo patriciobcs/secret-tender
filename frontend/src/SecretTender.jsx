@@ -6,8 +6,8 @@ import secretTenderABI from "./abi/secretTenderABI";
 import blockscootImage from "../public/blockscout.png";
 
 let instance;
-const CONTRACT_ADDRESS = "0x1d9b257E124B836B230FD0b015DF50586385F215";
 const BLOCKCHAIN_EXPLORER_URL = "https://explorer.testnet.inco.org/tx/";
+const CONTRACT_ADDRESS = "0xF58843e421020155F57211a08D0f0e0E6831806c";
 
 function SecretTender() {
   const [loading, setLoading] = useState("");

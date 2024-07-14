@@ -84,8 +84,8 @@
     "task:faucet": "hardhat task:faucet",
     "test": "hardhat test --network inco",
     "verify:base": "hardhat verify --network baseSepolia 0x663B610770162FA4c0B07593CAE7Ae5229C73C3c",
-    "verify:inco": "hardhat verify --network inco 0x1d9b257E124B836B230FD0b015DF50586385F215",
-    "demo:deploy": "pnpm deploy --network inco",
+    "verify:inco": "hardhat verify --network inco 0xF58843e421020155F57211a08D0f0e0E6831806c",
+    "demo:deploy": "pnpm deployc --network inco",
     "demo:faucet": "pnpm task:faucet --account alice --network inco",
     "demo:createTender": "pnpm task:createTender --amount 1000 --length 5 --account alice --network inco"
   },

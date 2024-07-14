@@ -1,11 +1,9 @@
-import { expect } from "chai";
 import { ethers } from "hardhat";
-
 import { createInstances } from "../instance";
 import { getSigners } from "../signers";
 import { createTransaction } from "../utils";
-import { deployEncryptedERC20Fixture } from "../encryptedERC20/EncryptedERC20.fixture";
 import { deploySecretTenderFixture } from "./SecretTender.fixture";
+import assert from "assert";
 
 describe("SecretTender", function () {
   before(async function () {
@@ -33,6 +31,18 @@ describe("SecretTender", function () {
       this.secretTender.createTender,
       encryptedSecretTenderLength, encryptedSecretTenderAmount
     );
+
     await secretTenderTransaction.wait();
+
+    // Create a secret proposal
+    const encryptedSecretProposalLength = this.secretTenderInstances.alice.encrypt32(4);
+    const encryptedSecretProposalAmount = this.secretTenderInstances.alice.encrypt32(9000);
+    const encryptedSecret = this.secretTenderInstances.alice.encrypt32(1234);
+
+    const secretProposalTransaction = await createTransaction(
+      this.secretTender.createProposal,
+      1, encryptedSecretProposalLength, encryptedSecretProposalAmount, encryptedSecret,
+    );
+    await secretProposalTransaction.wait();
   });
 });
