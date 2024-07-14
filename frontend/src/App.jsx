@@ -2,9 +2,10 @@ import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import { init } from "./utils/fhevm";
 import { Connect } from "./Connect";
-import SecretInput from "./SecretInput";
+import CreateProposal from "./CreateProposal";
+import SubmitTender from "./SubmitTender";
 import Dashboard from "./Dashboard";
-import Header from "./Header";
+
 import "./App.css";
 
 function App() {
@@ -32,7 +33,7 @@ function App() {
             return null;
           }}
         </Connect>
-        <Header account={account} />
+
         <div className="content">
           <h1>
             Welcome to <span>Secret Tender</span>
@@ -47,14 +48,14 @@ function App() {
             <div className="menu">
               <h2>What is your next step?</h2>
               <div className="button-group">
+                <Link to="/create-proposal">
+                  <button type="button" className="btn btn-secondary">
+                    Create Proposal
+                  </button>
+                </Link>
                 <Link to="/submit-tender">
                   <button type="button" className="btn btn-secondary">
                     Submit Tender
-                  </button>
-                </Link>
-                <Link to="/submit-project">
-                  <button type="button" className="btn btn-secondary">
-                    Submit Project
                   </button>
                 </Link>
                 <Link to="/dashboard">
@@ -67,8 +68,8 @@ function App() {
           )}
         </div>
         <Routes>
-          <Route path="/submit-tender" element={<SecretInput />} />
-          <Route path="/submit-project" element={<SecretInput />} />
+          <Route path="/create-proposal" element={<CreateProposal />} />
+          <Route path="/submit-tender" element={<SubmitTender />} />
           <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
       </div>
