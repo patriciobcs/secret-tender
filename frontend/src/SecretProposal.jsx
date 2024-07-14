@@ -66,7 +66,6 @@ function SecretProposal() {
 
   return (
     <div className="mt-5">
-      <h2>Secret Tender</h2>
       <div>
         <label>
           Tender:

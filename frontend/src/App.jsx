@@ -50,14 +50,14 @@ function App() {
             <div className="menu">
               <h2>What is your next step?</h2>
               <div className="button-group">
-                <Link to="/submit-tender">
-                  <button type="button" className="btn btn-secondary">
-                    Create Proposal
-                  </button>
-                </Link>
                 <Link to="/submit-project">
                   <button type="button" className="btn btn-secondary">
-                    Submit Tender
+                    Tenders
+                  </button>
+                </Link>
+                <Link to="/submit-tender">
+                  <button type="button" className="btn btn-secondary">
+                    Proposals
                   </button>
                 </Link>
                 <Link to="/dashboard">
@@ -68,12 +68,10 @@ function App() {
               </div>
             </div>
           )}
-          {isConnected && <SecretTender />}
-          {isConnected && <SecretProposal />}
         </div>
         <Routes>
-          <Route path="/submit-tender" element={<SecretInput />} />
           <Route path="/submit-project" element={<SubmitTender />} />
+          <Route path="/submit-tender" element={<SecretInput />} />
           <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
       </div>

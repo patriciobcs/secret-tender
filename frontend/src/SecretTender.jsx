@@ -88,16 +88,16 @@ function SecretTender() {
 
   return (
     <div className="mt-5">
-      <h2>Secret Tender</h2>
+      <h2>Tender Conditions</h2>
       <div className="form-group">
         <label>
-          Amount:
+          Budget (USDC):
           <input type="number" value={amount} onChange={handleAmountChange} />
         </label>
       </div>
       <div className="form-group">
         <label>
-          Length:
+          Expected Duration (days):
           <input type="number" value={length} onChange={handleLengthChange} />
         </label>
       </div>

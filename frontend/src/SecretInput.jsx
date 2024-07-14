@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import lighthouse from "@lighthouse-web3/sdk";
 import "./SecretInput.css"; // Importing the new CSS file
+import SecretProposal from "./SecretProposal";
 
 function SecretInput() {
   const [name, setName] = useState("");
@@ -88,18 +89,6 @@ function SecretInput() {
 
   return (
     <div className="secret-tender-container">
-      <h1>
-        Welcome to <span className="highlight">Secret Tender</span>
-      </h1>
-      <span className="footer">
-        Switch to Inco Gentry Testnet on Metamask:{" "}
-        <a
-          href="https://docs.inco.network/getting-started/connect-metamask"
-          target="_blank"
-          rel="noopener noreferrer">
-          Guide
-        </a>
-      </span>
       <Form className="form-container" onSubmit={handleSubmit}>
         <div className="section">
           <Form.Control
@@ -183,10 +172,11 @@ function SecretInput() {
         {/* <Button variant="primary" type="submit">
           Export as JSON
         </Button> */}
-        <Button variant="secondary" onClick={handleUpload} className="mt-3">
+        {/* <Button variant="secondary" onClick={handleUpload} className="mt-3">
           Upload
-        </Button>
+        </Button> */}
       </Form>
+      <SecretProposal />
       {cid && (
         <div className="cid-container">
           <h3>File uploaded successfully!</h3>

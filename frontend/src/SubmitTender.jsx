@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import lighthouse from "@lighthouse-web3/sdk";
 import "./CreateProposal.css"; // Reusing the CSS file from CreateProposal
+import SecretTender from "./SecretTender";
 
 function SubmitTender() {
   const [cid, setCid] = useState("");
@@ -81,9 +82,6 @@ function SubmitTender() {
 
   return (
     <div className="secret-tender-container consistent-width">
-      <h1>
-        Submit <span className="highlight">Tender</span>
-      </h1>
       <Form className="form-container" onSubmit={handleSubmit}>
         <div className="section">
           <Form.Control
@@ -128,10 +126,11 @@ function SubmitTender() {
             required
           />
         </div>
-        <Button variant="secondary" onClick={handleUpload} className="mt-3">
+        {/* <Button variant="secondary" onClick={handleUpload} className="mt-3">
           Submit Tender
-        </Button>
+        </Button> */}
       </Form>
+      <SecretTender />
       {cid && (
         <div className="glass-effect">
           <h3>File uploaded successfully!</h3>

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import lighthouse from "@lighthouse-web3/sdk";
 import "./SecretInput.css";
+import SecretProposal from "./SecretProposal";
 
 function CreateProposal() {
   const [name, setName] = useState("");
@@ -180,10 +181,11 @@ function CreateProposal() {
           />
         </div>
 
-        <Button variant="secondary" onClick={handleUpload} className="mt-3">
+        {/* <Button variant="secondary" onClick={handleUpload} className="mt-3">
           Upload
-        </Button>
+        </Button> */}
       </Form>
+      <SecretProposal />
       {cid && (
         <div className="cid-container">
           <h3>File uploaded successfully!</h3>
