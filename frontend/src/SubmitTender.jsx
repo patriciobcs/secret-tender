@@ -82,7 +82,7 @@ function SubmitTender() {
   return (
     <div className="secret-tender-container consistent-width">
       <h1>
-        Create <span className="highlight">Tender</span>
+        Submit <span className="highlight">Tender</span>
       </h1>
       <Form className="form-container" onSubmit={handleSubmit}>
         <div className="section">
@@ -129,7 +129,7 @@ function SubmitTender() {
           />
         </div>
         <Button variant="secondary" onClick={handleUpload} className="mt-3">
-          Create Tender
+          Submit Tender
         </Button>
       </Form>
       {cid && (

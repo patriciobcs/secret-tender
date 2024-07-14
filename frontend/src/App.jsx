@@ -6,6 +6,7 @@ import SecretInput from "./SecretInput";
 import Dashboard from "./Dashboard";
 import Header from "./Header";
 import SecretTender from "./SecretTender";
+import SubmitTender from "./SubmitTender";
 import "./App.css";
 
 function App() {
@@ -55,7 +56,7 @@ function App() {
                 </Link>
                 <Link to="/submit-project">
                   <button type="button" className="btn btn-secondary">
-                    Create Tender
+                    Submit Tender
                   </button>
                 </Link>
                 <Link to="/dashboard">
@@ -70,7 +71,7 @@ function App() {
         </div>
         <Routes>
           <Route path="/submit-tender" element={<SecretInput />} />
-          <Route path="/submit-project" element={<SecretInput />} />
+          <Route path="/submit-project" element={<SubmitTender />} />
           <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
       </div>

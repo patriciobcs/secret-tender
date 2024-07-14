@@ -3,6 +3,7 @@ import { createFhevmInstance } from "./utils/fhevm";
 import { useState, useCallback, useEffect, useMemo, React } from "react";
 
 const AUTHORIZED_CHAIN_ID = ["0x2382", "0x2383"]; // 9090, 9091
+const BLOCKCHAIN_EXPLORER_URL = "https://explorer.inco.org/address/";
 
 export const Connect = ({ children }) => {
   const [connected, setConnected] = useState(false);
@@ -138,7 +139,15 @@ export const Connect = ({ children }) => {
         </button>
       )}
       {connected && (
-        <div className="Connect__account">Connected with {account}</div>
+        <div className="Connect__account">
+          Connected with{" "}
+          <a
+            href={`${BLOCKCHAIN_EXPLORER_URL}${account}`}
+            target="_blank"
+            rel="noopener noreferrer">
+            {account}
+          </a>
+        </div>
       )}
     </div>
   );

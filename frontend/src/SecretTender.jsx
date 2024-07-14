@@ -89,20 +89,24 @@ function SecretTender() {
   return (
     <div className="mt-5">
       <h2>Secret Tender</h2>
-      <div>
+      <div className="form-group">
         <label>
           Amount:
           <input type="number" value={amount} onChange={handleAmountChange} />
         </label>
+      </div>
+      <div className="form-group">
         <label>
           Length:
           <input type="number" value={length} onChange={handleLengthChange} />
         </label>
       </div>
-      <button onClick={faucet} className="btn btn-primary">
+      <button onClick={faucet} className="btn btn-primary btn-neon btn-custom">
         Request Faucet
       </button>
-      <button onClick={createTender} className="btn btn-primary">
+      <button
+        onClick={createTender}
+        className="btn btn-primary btn-thick-border btn-custom">
         Create Tender
       </button>
       {loading && <p>{loading}</p>}

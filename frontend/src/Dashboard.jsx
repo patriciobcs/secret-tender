@@ -6,7 +6,6 @@ function Dashboard() {
   return (
     <div className="secret-tender-container">
       <header className="header">
-        <h1 className="title">Secret Tender</h1>
         <p className="subtitle">Unlocking onchain Sealed Proposals</p>
       </header>
 
